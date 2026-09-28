@@ -1,0 +1,27 @@
+# SAM / build artifacts
+.aws-sam/
+samconfig.toml
+function.zip
+*.zip
+
+# Python (converter service)
+**/.venv/
+__pycache__/
+*.pyc
+
+# Scratch / scratch test output
+_*.txt
+_*.json
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Secrets / local env
+.env
+*.env
+secrets*.json
+
+# OS
+.DS_Store
+Thumbs.db

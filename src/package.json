@@ -1,0 +1,10 @@
+{
+  "name": "dev-docs",
+  "version": "1.0.0",
+  "description": "test lambda",
+  "type": "module",
+  "main": "index.mjs",
+  "engines": {
+    "node": ">=20"
+  }
+}

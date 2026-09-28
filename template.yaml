@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Test lambda
+
+Parameters:
+  UpstreamMcpUrl:
+    Type: String
+    Default: https://developerknowledge.googleapis.com/mcp
+    Description: endpoint to proxy to.
+
+Resources:
+  McpProxyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: dev-docs-g
+      CodeUri: src/
+      Handler: index.handler
+      Runtime: nodejs20.x
+      MemorySize: 256
+      Timeout: 60
+      # Response streaming is required so SSE/long MCP responses flow back
+      # incrementally instead of buffering to the 6 MB invoke limit.
+      Environment:
+        Variables:
+          UPSTREAM_MCP_URL: !Ref UpstreamMcpUrl
+      FunctionUrlConfig:
+        AuthType: NONE
+        InvokeMode: RESPONSE_STREAM
+
+Outputs:
+  FunctionUrl:
+    Description: Add this URL to Claude as a custom connector (append no path).
+    Value: !GetAtt McpProxyFunctionUrl.FunctionUrl
+  FunctionName:
+    Value: !Ref McpProxyFunction
